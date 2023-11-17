@@ -4,7 +4,7 @@ const Header = () => {
   return (
     <div className='header'>
       <Link  style={{textDecoration:'none'}} to='/flavours'>
-       <header style={{color:'brown',fontFamily:'Bradley Hand'}}><article>CHAI LIFE</article></header> 
+       <header style={{color:'brown'}}><article>CHAI LIFE</article></header> 
        </Link>
     </div>
   )

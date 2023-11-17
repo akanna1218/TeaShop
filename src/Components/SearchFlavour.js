@@ -6,7 +6,6 @@ const SearchFlavour = ({searchFlavour,setSearchFlavour}) => {
   <form className='SearchFlavour'>
     <div className='search'><input
         type='text'
-        style={{}}
         value={searchFlavour}
         placeholder='Choose your flavour'
         onChange={(e)=>setSearchFlavour(e.target.value)}> 
