@@ -1,14 +1,39 @@
 import './App.css';
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import SearchFlavour from './Components/SearchFlavour';
 import { Link, Route,Routes } from 'react-router-dom';
 import Locations from './Components/Locations';
 import Flavours from './Components/Flavours';
 import Home from './Components/Home';
 import Header from './Components/Header';
+import api from './api/chai';       
 function App() {
-  const [chaiList,setChaiList]=useState([{id:1,Image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROvTrpwqh3OBVNyg1mZLrLE5oeqownQIKkkvP5dGyLEtqmZnMZEnnD1uMytHGsU-rh9vQ&usqp=CAU",item:"Masala chai"},{id:2,Image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwYZ99dfUCerbdnbQmifX4a94YhiVJNCr6cA&usqp=CAU",item:"Green chai"},{id:3,Image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmnVfSpYGWcQ6p7xf7XMmeMSGhNSXlyvqHlA&usqp=CAU",item:"Turmeric chai"},{id:4,Image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQai1RP-4bhppzM0QMOKSSQJTcmjnSYLMNtbw&usqp=CAU",item:"Kadak chai"},{id:5,Image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNwKEKTvvMR0DsYqI_TNPAY77kxlOm9CKUKQ&usqp=CAU",item:"Hibiscus chai"}])
+  const [chaiList,setChaiList]=useState([])
   const [searchFlavour,setSearchFlavour]=useState('')
+  useEffect(()=>{                                             
+    const fetchApiFromAxios= async ()=>{                                    // always use async await and try catch in api link functions
+      try{
+      const response= await api.get('./api/chai');                          // this foldername.get will get the data from the link         // give the correct folder path
+      // console.log(response.data)
+      setChaiList(response.data)                                        // this .data will get the data directly without converting the json      // here we are passing only the  data from that link to the setState where we should pass item
+                                                                        // in Axios the status not found error will be automatically handled or throwed
+    }
+      catch(err){                                                       // Intha err la both antha response link oda status ,data ,header um irukum and suppose antha response link ey ila na adhu en varla ndra error message um irukum
+        if(err.response){                                               // so err la response link fine uh iruntha idha pannu
+          console.log(err.response.data)
+          console.log(err.response.status)
+          console.log(err.response.headers)
+        }
+        else{                                                             // err la response link fine uh ila na , athoda reson message display pannu solrom
+          console.log(
+            `error ${err.message}`
+          )
+        }
+        
+      }
+    }
+    fetchApiFromAxios() // we have to call the function
+  },[setChaiList])
   return (
     <div className='App'>
           <Header/>
